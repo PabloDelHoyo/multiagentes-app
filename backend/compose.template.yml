@@ -1,0 +1,32 @@
+services:
+  mineriadb:
+    image: mysql:8.0
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+      - type: volume
+        source: mineriadb-data
+        target: /var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/root_password
+    secrets:
+      - root_password
+  
+  mineriaapi:
+    build:
+      context: .
+    restart: always
+    ports:
+      - 8000:80
+    environment:
+      - DB_PASSWORD_FILE=/run/secrets/root_password
+    secrets:
+      - root_password
+
+secrets:
+  root_password:
+    file: root_password.txt
+
+volumes:
+  mineriadb-data:
