@@ -3,7 +3,7 @@ Una simple aplicación web para explorar datos relacionados con el sector de la 
 interés en el vehículo eléctrico. TODO: incluir la parte de predicción
 
 ## Desarrollo
-WIP.
+Para el desarrollo se utiliza un imágen diferente mucho más ligera que la que está siendo utilizada en producción. Continuar...
 
 ## Despliegue
 ### Backend
@@ -25,17 +25,13 @@ $ docker compose up -d
 ```
 Por defecto, el servicio escuchará en todas las direcciones IP que tenga la máquina en el puerto 8000. Esto puede cambiarse en el archivo `compose.yml`. Además también se expone el puerto 3306 de la base de datos.
 
-
-
-
-
 Para parar el servicio, deberás ejecutar lo siguiente
 ```bash
 $ docker compose down
 ```
 Lo anterior no elimina el volumen que el contenedor de la base de datos crea para que los datos sean persistentes. Si quieres eliminarlo, deberás emplear `docker volume rm <nombre-volumen>`.
 
-Ten en cuenta que la primer vez que ejecutas el comando anterior, se montará una nueva base de datos que estará vacía. Para que la API haga algo útil, tendrás que insertar previamente los datos. Si por alguna razón, solo quisieras levantar la base de datos (por ejemplo, para insertar los datos), puedes hacer lo siguiente
+Ten en cuenta que la primer vez que ejecutas el comando anterior, se montará una nueva base de datos que estará vacía. Para que la API haga algo útil, tendrás que insertar previamente los datos. Si por alguna razón, únicamente quisieras levantar la base de datos (por ejemplo, para insertar los datos), puedes hacer lo siguiente
 
 ```bash
 $ docker compose run --rm --service-ports -d mineriadb
