@@ -1,6 +1,7 @@
 services:
   mineriadb:
     image: mysql:8.0
+    command: --require-secure-transport=ON
     restart: always
     ports:
       - 3306:3306
