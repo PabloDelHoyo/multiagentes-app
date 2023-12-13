@@ -176,6 +176,7 @@ class _SpecificTablePageState extends State<SpecificTablePage> {
   Future<void> loadTableData() async {
     setState(() {
       isLoading = true;
+      offset += 20;
     });
 
     final apiUrl =
