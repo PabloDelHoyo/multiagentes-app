@@ -5,9 +5,11 @@ from enum import Enum
 import os
 
 import sqlalchemy as sa
+from pydantic import BaseModel, Field
+import pandas as pd
+
 from fastapi import FastAPI, Depends, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, Field
 
 app = FastAPI(root_path=os.getenv("ROOT_PATH", ""))
 app.add_middleware(
@@ -37,13 +39,6 @@ DB_URL = sa.URL.create(
     port=3306,
 )
 
-"""
-engine = sa.create_engine(DB_URL, connect_args={
-    "ssl_verify_identity": False,
-    "ssl_verify_cert": True
-})
-"""
-
 # https://stackoverflow.com/questions/55617520/unable-to-make-tls-tcp-connection-to-remote-mysql-server-with-pymysql-other-too
 engine = sa.create_engine(DB_URL, connect_args={
 	"ssl": {"fake_tls_flag": True}
@@ -72,6 +67,16 @@ class BoolOp(str, Enum):
     AND = "AND"
     OR = "OR"
     NOT = "NOT"
+
+class Car(BaseModel):
+    brand: str
+    model: str
+
+class RecommendatorParams(BaseModel):
+    max_price: float
+    min_num_seats: float
+    autonomy: float
+    autonomy_margin: float=150
 
 FilterValue = str | float | int
 
@@ -269,3 +274,17 @@ def submit_search(
     )
 
     return list(result.mappings())
+
+@app.post("/recommend", response_model=list[Car])
+def recommend(
+    params: RecommendatorParams,
+    conn: Annotated[sa.Connection, Depends(get_db_connection)]
+):
+    df = pd.read_sql_table("recomendador", conn, schema="gold")
+
+    df = df[df['Seats'] >= params.min_num_seats]
+    df = df[df['PriceEuro'] <= params.max_price]
+    df = df[(df['Range_Km'] >= (params.autonomy-params.autonomy_margin)) & 
+            (df['Range_Km'] <= (params.autonomy+params.autonomy_margin))]
+    
+    return df[["Brand", "Model"]].rename(columns=str.lower).to_dict("records")
