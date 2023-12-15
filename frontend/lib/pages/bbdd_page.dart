@@ -1,12 +1,24 @@
 import 'dart:convert';
-
 import 'package:adaptive_scrollbar/adaptive_scrollbar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pagina_web/bars/app_bar.dart';
 import 'package:pagina_web/bars/side_bar.dart';
 
-class BBDD4 extends StatelessWidget {
+
+class BBDD_Page extends StatefulWidget {
+  const BBDD_Page({Key? key})
+      : super(key: key);
+
+  @override
+  _BBDD_PageState createState() => _BBDD_PageState();
+}
+class _BBDD_PageState extends State<BBDD_Page> {
+    //String api_url_base = 'https://multiagentes.programadormanchego.es/api';
+  static const String api_url_base = String.fromEnvironment('API_URL', defaultValue: 'https://multiagentes.programadormanchego.es/api');
+  @override
+  void initState(){
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -33,14 +45,15 @@ class BBDD4 extends StatelessWidget {
                   String apiUrl;
 
                   if (index == 0) {
+                    print(api_url_base);
                     category = 'RAW';
-                    apiUrl = 'https://multiagentes.programadormanchego.es/api/raw';
+                    apiUrl = api_url_base +'/raw';
                   } else if (index == 1) {
                     category = 'SILVER';
-                    apiUrl = 'https://multiagentes.programadormanchego.es/api/silver';
+                    apiUrl = api_url_base +'/silver';
                   } else {
                     category = 'GOLD';
-                    apiUrl = 'https://multiagentes.programadormanchego.es/api/gold';
+                    apiUrl = api_url_base +'/gold';
                   }
 
                   return Card(
@@ -68,6 +81,7 @@ class BBDD4 extends StatelessWidget {
     );
   }
 }
+
 
 class bbdd_schemas extends StatefulWidget {
   final String apiUrlBase;

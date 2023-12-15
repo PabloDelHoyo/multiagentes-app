@@ -53,7 +53,7 @@ class NavBar extends StatelessWidget {
         break;
       case BASE_DE_DATOS:
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => BBDD4()));
+            context, MaterialPageRoute(builder: (context) => BBDD_Page()));
         break;
       case API:
           final Uri uri = Uri.parse('https://multiagentes.programadormanchego.es/api/docs');
