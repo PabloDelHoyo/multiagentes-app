@@ -190,11 +190,11 @@ class _SpecificTablePageState extends State<SpecificTablePage> {
   Future<void> loadTableData() async {
     setState(() {
       isLoading = true;
-      offset += 20;
     });
 
     final apiUrl =
         '${widget.apiUrlBase}${"/"}${widget.tableName}?size=$pageSize&offset=$offset';
+    offset += 20;
     print(apiUrl);
     final response = await http.get(Uri.parse(apiUrl));
     if (response.statusCode == 200) {
@@ -226,7 +226,9 @@ class _SpecificTablePageState extends State<SpecificTablePage> {
             backgroundColor: Colors.blue[200],
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => {
+                offset = 0,
+                Navigator.pop(context),}
             ),
           ),
           Expanded(

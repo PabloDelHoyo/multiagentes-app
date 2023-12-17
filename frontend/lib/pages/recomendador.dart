@@ -169,7 +169,7 @@ class _Prediccion_PageState extends State<Prediccion_Page> {
                       ),
                       Center(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
                               'Precio máximo',
