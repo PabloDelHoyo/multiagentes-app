@@ -223,6 +223,7 @@ class _Prediccion_PageState extends State<Prediccion_Page> {
                   ),
                 ),
 
+
                 SizedBox(
                   height: mq.height * 0.1,
                 ),
@@ -310,9 +311,11 @@ class _Prediccion_PageState extends State<Prediccion_Page> {
                   ),
                 ),
 
+
                 SizedBox(
                   height: mq.height * 0.2,
                 ),
+
 
                 buildFooter(context),
               ],

@@ -45,13 +45,17 @@ class _BBDD_PageState extends State<BBDD_Page> {
 
                   if (index == 0) {
                     print(api_url_base);
+                    print(api_url_base);
                     category = 'RAW';
+                    apiUrl = api_url_base +'/raw';
                     apiUrl = api_url_base +'/raw';
                   } else if (index == 1) {
                     category = 'SILVER';
                     apiUrl = api_url_base +'/silver';
+                    apiUrl = api_url_base +'/silver';
                   } else {
                     category = 'GOLD';
+                    apiUrl = api_url_base +'/gold';
                     apiUrl = api_url_base +'/gold';
                   }
 
@@ -189,6 +193,7 @@ class _SpecificTablePageState extends State<SpecificTablePage> {
   Future<void> loadTableData() async {
     setState(() {
       isLoading = true;
+      offset += 20;
     });
 
     final apiUrl =
