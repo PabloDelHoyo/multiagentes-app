@@ -9,6 +9,7 @@ class NavBar extends StatelessWidget {
   static const String BASE_DE_DATOS = 'Base De Datos';
   static const String API = 'API';
   static const String RECOMENDADOR = 'Recomendador';
+  static const String api_url_base = String.fromEnvironment('API_URL');
 
   NavBar({Key? key}) : super(key: key);
   @override
@@ -56,7 +57,7 @@ class NavBar extends StatelessWidget {
             context, MaterialPageRoute(builder: (context) => BBDD_Page()));
         break;
       case API:
-          final Uri uri = Uri.parse('https://multiagentes.programadormanchego.es/api/docs');
+          final Uri uri = Uri.parse(api_url_base + '/docs');
           if (await canLaunchUrl(uri)) {
             await launchUrl(uri);
           } else {

@@ -14,8 +14,7 @@ class BBDD_Page extends StatefulWidget {
   _BBDD_PageState createState() => _BBDD_PageState();
 }
 class _BBDD_PageState extends State<BBDD_Page> {
-    //String api_url_base = 'https://multiagentes.programadormanchego.es/api';
-  static const String api_url_base = String.fromEnvironment('API_URL', defaultValue: 'https://multiagentes.programadormanchego.es/api');
+  static const String api_url_base = String.fromEnvironment('API_URL');
   @override
   void initState(){
   }
@@ -46,13 +45,17 @@ class _BBDD_PageState extends State<BBDD_Page> {
 
                   if (index == 0) {
                     print(api_url_base);
+                    print(api_url_base);
                     category = 'RAW';
+                    apiUrl = api_url_base +'/raw';
                     apiUrl = api_url_base +'/raw';
                   } else if (index == 1) {
                     category = 'SILVER';
                     apiUrl = api_url_base +'/silver';
+                    apiUrl = api_url_base +'/silver';
                   } else {
                     category = 'GOLD';
+                    apiUrl = api_url_base +'/gold';
                     apiUrl = api_url_base +'/gold';
                   }
 
@@ -195,6 +198,7 @@ class _SpecificTablePageState extends State<SpecificTablePage> {
 
     final apiUrl =
         '${widget.apiUrlBase}${"/"}${widget.tableName}?size=$pageSize&offset=$offset';
+    offset += 20;
     print(apiUrl);
     final response = await http.get(Uri.parse(apiUrl));
     if (response.statusCode == 200) {
@@ -226,7 +230,9 @@ class _SpecificTablePageState extends State<SpecificTablePage> {
             backgroundColor: Colors.blue[200],
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => {
+                offset = 0,
+                Navigator.pop(context),}
             ),
           ),
           Expanded(
