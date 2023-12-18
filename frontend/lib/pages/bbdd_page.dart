@@ -14,8 +14,7 @@ class BBDD_Page extends StatefulWidget {
   _BBDD_PageState createState() => _BBDD_PageState();
 }
 class _BBDD_PageState extends State<BBDD_Page> {
-    //String api_url_base = 'https://multiagentes.programadormanchego.es/api';
-  static const String api_url_base = String.fromEnvironment('API_URL', defaultValue: 'https://multiagentes.programadormanchego.es/api');
+  static const String api_url_base = String.fromEnvironment('API_URL');
   @override
   void initState(){
   }
