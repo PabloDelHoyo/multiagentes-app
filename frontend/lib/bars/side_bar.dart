@@ -9,7 +9,7 @@ class NavBar extends StatelessWidget {
   static const String BASE_DE_DATOS = 'Base De Datos';
   static const String API = 'API';
   static const String RECOMENDADOR = 'Recomendador';
-  static const String api_url_base = String.fromEnvironment('API_URL', defaultValue: 'https://multiagentes.programadormanchego.es/api');
+  static const String api_url_base = String.fromEnvironment('API_URL');
 
   NavBar({Key? key}) : super(key: key);
   @override

@@ -16,7 +16,7 @@ class Prediccion_Page extends StatefulWidget {
 }
 
 class _Prediccion_PageState extends State<Prediccion_Page> {
-  static const String api_url_base = String.fromEnvironment('API_URL', defaultValue: 'https://multiagentes.programadormanchego.es/api');
+  static const String api_url_base = String.fromEnvironment('API_URL');
   final List<int> numeroDeAsientos = [2, 4, 5, 6, 7];
   final List<String> tipos_de_autonomia = [
     "Distancias Cortas",
