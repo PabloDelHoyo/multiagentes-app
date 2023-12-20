@@ -13,7 +13,12 @@ import models
 import db
 from query_builder import QueryBuilder
 
-app = FastAPI(root_path=os.getenv("ROOT_PATH", ""))
+app = FastAPI(
+    root_path=os.getenv("ROOT_PATH", ""),
+    title="API Multiagentes",
+    description="Consulta datos relacionados con el sector del vehículo eléctrico",
+    root_path_in_servers=False
+)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -29,8 +34,15 @@ def check_table_exists(conn: sa.Connection, schema: str, table: str):
         )
 
 
-@app.get("/{db_schema}", response_model=list[models.DBSchemaInfo])
+@app.get(
+    "/{db_schema}",
+    summary="Obtiene las tablas que hay en un esquema",
+    response_model=list[models.DBSchemaInfo],
+)
 def get_schema(db_schema: models.DBSchema, conn: Annotated[sa.Connection, Depends(db.get_connection)]):
+    """
+    Devuelve las tablas que tiene el esquema `db_schema`
+    """
     column_results = conn.execute(sa.text(
         """SELECT table_name AS name, column_name AS column_name
         FROM information_schema.COLUMNS 
@@ -61,7 +73,7 @@ def get_schema(db_schema: models.DBSchema, conn: Annotated[sa.Connection, Depend
             ]
 
 
-@app.get("/{db_schema}/{table_name}")
+@app.get("/{db_schema}/{table_name}", summary="Obtiene los registros de una tabla")
 def get_table(
     db_schema: models.DBSchema,
     table_name: str,
@@ -69,6 +81,12 @@ def get_table(
     offset: Annotated[int, Query(ge=0)] = 0,
     size: Annotated[int, Query(ge=0)] = 10
 ):
+    """
+    Devuelve los registros de la tabla `table_name` en el esquema `db_schema`. Los
+    resultados se devuelven paginados. La paginación se controla mediante los query
+    parameters `offset` y `size`
+    """
+
     # TODO: there has to be a way to make this a FastAPI dependency
     check_table_exists(conn, db_schema, table_name)
 
@@ -83,10 +101,8 @@ def get_table(
 
     return list(results.mappings())
 
-# TODO: document params
 
-
-@app.post("/{db_schema}/{table_name}/search")
+@app.post("/{db_schema}/{table_name}/search", summary="Realiza una búsqueda avanzada")
 def submit_search(
     db_schema: models.DBSchema,
     table_name: str,
@@ -95,6 +111,11 @@ def submit_search(
     offset: Annotated[int, Query(ge=0)] = 0,
     size: Annotated[int, Query(ge=0)] = 10
 ):
+    """
+    Permite hacer una búsqueda avanzada sobre los registros de la tabla `table_name`
+    en `db_schema`. Los resultados se devuelven paginados. La paginación se controla 
+    mediante los query parameters `offset` y `size`
+    """
     # TODO: there has to be a way to make this a FastAPI dependency
     check_table_exists(conn, db_schema, table_name)
 
@@ -136,11 +157,18 @@ def submit_search(
     return list(result.mappings())
 
 
-@app.post("/recommend", response_model=list[models.Car])
+@app.post(
+    "/recommend",
+    summary="Devuelve recomendaciones de vehículos",
+    response_model=list[models.Car]
+)
 def recommend(
     params: models.RecommendatorParams,
     conn: Annotated[sa.Connection, Depends(db.get_connection)]
 ):
+    """
+    Devuelve los mejores coches que cumplan una serie de requisitos
+    """
     df = pd.read_sql_table("recomendador", conn, schema="gold")
 
     df = df[df['Seats'] >= params.min_num_seats]
