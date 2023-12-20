@@ -19,6 +19,7 @@ class DBSchemaInfo(BaseModel):
 
 
 class ComparisonOp(str, Enum):
+    NE = "!="
     EQ = "="
     GE = ">="
     LE = "<="
