@@ -2,7 +2,8 @@
 
 ## Despligue
 Para ejecutarlo con el fin de desplegarlo, sitúa tu directorio de trabajo en esta
-carpeta. A continuación, haz una copia del archivo `compose.template.yml` con el nombre de `compose.yml`. Una vez hayas adaptado el `compose.yml` a tus necesidades y hayas guardado los archivos txt con los "secretos" requeridos para que el backend funcione, ejecuta lo siguiente
+carpeta. A continuación, haz una copia del archivo `compose.template.yml` con el nombre de `compose.yml`. Una vez hayas adaptado el `compose.yml` a tus necesidades y hayas guardado los archivos txt con los "secretos" requeridos para que el backend funcione, ejecuta lo siguiente. En el `compose.yml` se debe especificar el `Dockerfile` que
+se usará para construir la imagen del servicio. Hay dos: `prod.dockerfile` y `dev.dockerfile`. La primera está pensada para la puesta en producción en una sola máquina y, la segunda, para desarrollo.
 
 ```bash
 $ docker compose up -d

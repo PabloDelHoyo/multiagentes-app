@@ -1,11 +1,13 @@
 # multiagentes-app
 Una simple aplicación web para explorar datos relacionados con el sector de la automoción, con un especial
-interés en el vehículo eléctrico. TODO: incluir la parte de predicción
+interés en el vehículo eléctrico. También incluye un recomendador que te permite obtener los mejores coches que
+se ajustan a una serie de restricciones.
 
 ## Desarrollo
-Para el desarrollo se utiliza un imágen diferente mucho más ligera que la que está siendo utilizada en producción. Continuar...
+Para el desarrollo se utiliza un imagen diferente mucho más ligera que la que está siendo utilizada en producción. Esta recibe el nombre de `dev.dockerfile`.
 
 ## Despliegue
+La imagen pensada para producción tiene el nombre de `prod.dockerfile`
 ### Backend
 Para desplegar el backend, sitúate en la directorio
 backend.
